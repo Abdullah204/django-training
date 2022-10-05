@@ -3,18 +3,18 @@ Imports:
 >>> from albums.models import Album  
  # note  : other imports are written directly before it is used
 Inserts:
->>> b = Artist(stage_name='artist1', social_link_field='https://www.instagram.com/artist1/')
->>> b.save()
->>> b = Artist(stage_name='artist2', social_link_field='https://www.instagram.com/artist2/')
->>> b.save()
->>> b = Artist(stage_name='artist3', social_link_field='https://www.instagram.com/artist3/')
->>> b.save()
->>> b = Artist(stage_name='artist4', social_link_field='https://www.instagram.com/artist4/')
->>> b.save()
->>> b = Artist(stage_name='artist5', social_link_field='https://www.instagram.com/artist5/')
->>> b.save()
->>> b = Artist(stage_name='artist0', social_link_field='https://www.instagram.com/artist0/')
->>> b.save()
+>>> b = Artist(stage_name='artist1', social_link_field='https://www.instagram.com/artist1/')<br />
+>>> b.save()<br />
+>>> b = Artist(stage_name='artist2', social_link_field='https://www.instagram.com/artist2/')<br />
+>>> b.save()<br />
+>>> b = Artist(stage_name='artist3', social_link_field='https://www.instagram.com/artist3/')<br />
+>>> b.save()<br />
+>>> b = Artist(stage_name='artist4', social_link_field='https://www.instagram.com/artist4/')<br />
+>>> b.save()<br />
+>>> b = Artist(stage_name='artist5', social_link_field='https://www.instagram.com/artist5/')<br />
+>>> b.save()<br />
+>>> b = Artist(stage_name='artist0', social_link_field='https://www.instagram.com/artist0/')<br />
+>>> b.save()<br />
 
 list down all artists:
 >>> Artist.objects.all()
