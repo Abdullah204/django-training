@@ -83,6 +83,8 @@
 
 # second way:<br />
 <br />
+
+
 >>> artist2 = Artist.objects.get(id=2)<br />
 >>> album3 = Album(name="album3" , release_datetime =datetime.datetime(2011, 11, 20, 20, 8, 7, 127325, tzinfo=pytz.UTC),cost=10.5,artist =artist2)<br />
 >>> album4 = Album(name="album4" , release_datetime =datetime.datetime(2012, 11, 20, 20, 8, 7, 127325, tzinfo=pytz.UTC),cost=5.5,artist =artist2)<br />
