@@ -1,6 +1,6 @@
 Imports:
->>> from artists.models import Artist
->>> from albums.models import Album
+>>> from artists.models import Artist  
+>>> from albums.models import Album  
  # note  : other imports are written directly before it is used
 Inserts:
 >>> b = Artist(stage_name='artist1', social_link_field='https://www.instagram.com/artist1/')
