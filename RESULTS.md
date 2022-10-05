@@ -53,7 +53,7 @@
     <Artist: artist4 https://www.instagram.com/artist4/>, <br />
     <Artist: artist5 https://www.instagram.com/artist5/>]><br />
 >>> Artist.objects.filter(stage_name__startswith='a')<br />
-<QuerySet [<Artist: artist0 https://www.instagram.com/artist0/>, <Artist: artist1 https://www.instagram.com/artist1/>,<br />
+<QuerySet [<Artist: artist0 https://www.instagram.com/artist0/>, <br/> <Artist: artist1 https://www.instagram.com/artist1/>,<br />
 <Artist: artist2 https://www.instagram.com/artist2/>,<br />
 <Artist: artist3 https://www.instagram.com/artist3/>,<br />
 <Artist: artist4 https://www.instagram.com/artist4/>, <br />
@@ -61,7 +61,7 @@
 
 >>> Artist.objects.filter(stage_name__startswith='b')<br />
 <QuerySet []>
- notice : its not case sensitive
+ notice : its not case sensitive <br/>
  note the second query (starts with 'b') wasnt required but I wrote it to make sure the filter is working correctly
 
 # in 2 different ways, create some albums and assign them to any artists <br />
