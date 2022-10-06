@@ -1,3 +1,7 @@
+```
+
+```
+
 # Imports:
 
 > > > from artists.models import Artist `<br />`
@@ -128,25 +132,26 @@ note : album id isnt equal to number in name because I deleted some albums
 > > > Album.objects.all().order_by('cost','name')`<br />`
 > > > <QuerySet [<Album: 7 album4>, <Album: 6 album3>, <Album: 5 album1>, <Album: 2 album2>]>`<br />`
 
-<br /><br /><br />
+` <br /><br />``<br /> `
 
 # Task 2 query : order the list of artists by the number of their approved albums:
 
 > > > from artists.models import Artist
-> > > from albums.models import Albums
-> > > from django.db.models import Count
-> > > Artist.objects.all().annotate(num_albums = Count('album')).order_by('num_albums')
+> > > from albums.models import Album
+> > > from django.db.models import Count, Case , When
 
-<QuerySet [ <br /> <Artist: name: artist3
+> > > `Artist.objects.annotate(num_albums = Count(Case(When(album__approved__exact = True,then = 1)))).order_by('num_albums',)`
+
+<QuerySet [ `<br />` <Artist: name: artist3
 social_url: https://www.instagram.com/artist3/
-0 approved albums>, <br /><Artist: name: artist4
+0 approved albums>, `<br />`<Artist: name: artist4
 social_url: https://www.instagram.com/artist4/
-0 approved albums>,<br /> <Artist: name: artist5
+0 approved albums>,`<br />` <Artist: name: artist5
 social_url: https://www.instagram.com/artist5/
-0 approved albums>, <br /><Artist: name: artist0
+0 approved albums>, `<br />`<Artist: name: artist0
 social_url: https://www.instagram.com/artist0/
-1 approved albums>,<br /> <Artist: name: artist1
+1 approved albums>,`<br />` <Artist: name: artist1
 social_url: https://www.instagram.com/artist1/
-1 approved albums>, <br /><Artist: name: artist2
+1 approved albums>, `<br />`<Artist: name: artist2
 social_url: https://www.instagram.com/artist2/
 2 approved albums>]>
