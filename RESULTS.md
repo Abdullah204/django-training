@@ -12,46 +12,27 @@
 
 > > > Artist.objects.all()`<br />`
 > > > <QuerySet [<Artist: artist0 https://www.instagram.com/artist0/>, `<br />`
-> > > >>> <Artist: artist1 https://www.instagram.com/artist1/>,`<br />`
-> > > >>> <Artist: artist2 https://www.instagram.com/artist2/>,`<br />`
-> > > >>> <Artist: artist3 https://www.instagram.com/artist3/>,`<br />`
-> > > >>> <Artist: artist4 https://www.instagram.com/artist4/>,`<br />`
-> > > >>> <Artist: artist5 https://www.instagram.com/artist5/>]>`<br />`
+> > >
+> > > > > > <Artist: artist1 https://www.instagram.com/artist1/>,`<br />` <Artist: artist2 https://www.instagram.com/artist2/>,`<br />` <Artist: artist3 https://www.instagram.com/artist3/>,`<br />` <Artist: artist4 https://www.instagram.com/artist4/>,`<br />` <Artist: artist5 https://www.instagram.com/artist5/>]>`<br />`
 
 > > > Artist.objects.all().values()`<br />`
 > > > <QuerySet [{'id': 6, 'stage_name': 'artist0', 'social_link_field': 'https://www.instagram.com/artist0/'},`<br />`
-> > > >>> {'id': 1, 'stage_name': 'artist1', 'social_link_field': 'https://www.instagram.com/artist1/'},`<br />`
-> > > >>> {'id': 2, 'stage_name': 'artist2', 'social_link_field': 'https://www.instagram.com/artist2/'},`<br />`
-> > > >>> {'id': 3, 'stage_name': 'artist3', 'social_link_field': 'https://www.instagram.com/artist3/'},`<br />`
-> > > >>> {'id': 4, 'stage_name': 'artist4', 'social_link_field': 'https://www.instagram.com/artist4/'},`<br />`
-> > > >>> {'id': 5, 'stage_name': 'artist5', 'social_link_field': 'https://www.instagram.com/artist5/'}]>`<br />`
+> > >
+> > > > > > {'id': 1, 'stage_name': 'artist1', 'social_link_field': 'https://www.instagram.com/artist1/'},`<br />` {'id': 2, 'stage_name': 'artist2', 'social_link_field': 'https://www.instagram.com/artist2/'},`<br />` {'id': 3, 'stage_name': 'artist3', 'social_link_field': 'https://www.instagram.com/artist3/'},`<br />` {'id': 4, 'stage_name': 'artist4', 'social_link_field': 'https://www.instagram.com/artist4/'},`<br />` {'id': 5, 'stage_name': 'artist5', 'social_link_field': 'https://www.instagram.com/artist5/'}]>`<br />`
 
 # list down all artists sorted by name:`<br />`
 
 > > > Artist.objects.all().order_by('stage_name').values()`<br />`
 > > > <QuerySet [{'id': 6, 'stage_name': 'artist0',`<br />`
-> > > >>> 'social_link_field': 'https://www.instagram.com/artist0/'},`<br />`
-> > > >>> {'id': 1, 'stage_name': 'artist1', 'social_link_field': 'https://www.instagram.com/artist1/'},`<br />`
-> > > >>> {'id': 2, 'stage_name': 'artist2', 'social_link_field': 'https://www.instagram.com/artist2/'},`<br />`
-> > > >>> {'id': 3, 'stage_name': 'artist3', 'social_link_field': 'https://www.instagram.com/artist3/'},`<br />`
-> > > >>> {'id': 4, 'stage_name': 'artist4', 'social_link_field': 'https://www.instagram.com/artist4/'},`<br />`
-> > > >>> {'id': 5, 'stage_name': 'artist5', 'social_link_field': 'https://www.instagram.com/artist5/'}]>`<br />`
+> > >
+> > > > > > 'social_link_field': 'https://www.instagram.com/artist0/'},`<br />` {'id': 1, 'stage_name': 'artist1', 'social_link_field': 'https://www.instagram.com/artist1/'},`<br />` {'id': 2, 'stage_name': 'artist2', 'social_link_field': 'https://www.instagram.com/artist2/'},`<br />` {'id': 3, 'stage_name': 'artist3', 'social_link_field': 'https://www.instagram.com/artist3/'},`<br />` {'id': 4, 'stage_name': 'artist4', 'social_link_field': 'https://www.instagram.com/artist4/'},`<br />` {'id': 5, 'stage_name': 'artist5', 'social_link_field': 'https://www.instagram.com/artist5/'}]>`<br />`
 
 # list down all artists whose name starts with `a`:`<br />`
 
-> > > Artist.objects.filter(stage_name**startswith='A')`<br />`
+> > > Artist.objects.filter(stage_name\*\*startswith='A')`<br />`
 > > > <QuerySet [<Artist: artist0 https://www.instagram.com/artist0/>,`<br />`
-> > > >>> <Artist: artist1 https://www.instagram.com/artist1/>,`<br />`
-> > > >>> <Artist: artist2 https://www.instagram.com/artist2/>,`<br />`
-> > > >>> <Artist: artist3 https://www.instagram.com/artist3/>,`<br />`
-> > > >>> <Artist: artist4 https://www.instagram.com/artist4/>, `<br />`
-> > > >>> <Artist: artist5 https://www.instagram.com/artist5/>]>`<br />`
-> > > Artist.objects.filter(stage_name**startswith='a')`<br />`
-> > > <QuerySet [<Artist: artist0 https://www.instagram.com/artist0/>, `<br/>` <Artist: artist1 https://www.instagram.com/artist1/>,`<br />`
-> > > >>> <Artist: artist2 https://www.instagram.com/artist2/>,`<br />`
-> > > >>> <Artist: artist3 https://www.instagram.com/artist3/>,`<br />`
-> > > >>> <Artist: artist4 https://www.instagram.com/artist4/>, `<br />`
-> > > >>> <Artist: artist5 https://www.instagram.com/artist5/>]>`<br />`
+> > >
+> > > > > > <Artist: artist1 https://www.instagram.com/artist1/>,`<br />` <Artist: artist2 https://www.instagram.com/artist2/>,`<br />` <Artist: artist3 https://www.instagram.com/artist3/>,`<br />`<Artist: artist4 https://www.instagram.com/artist4/>,`<br />` <Artist: artist5 https://www.instagram.com/artist5/>]>`<br />` Artist.objects.filter(stage_name**startswith='a')`<br />`<QuerySet [<Artist: artist0 https://www.instagram.com/artist0/>,`<br/>` <Artist: artist1 https://www.instagram.com/artist1/>,`<br />` <Artist: artist2 https://www.instagram.com/artist2/>,`<br />` <Artist: artist3 https://www.instagram.com/artist3/>,`<br />`<Artist: artist4 https://www.instagram.com/artist4/>,`<br />` <Artist: artist5 https://www.instagram.com/artist5/>]>`<br />`
 
 > > > Artist.objects.filter(stage_name\_\_startswith='b')`<br />`
 > > > <QuerySet []>
@@ -88,13 +69,13 @@
 
 # get the latest released album:`<br /><br />`
 
-> > > from django.db.models import Max`<br />`
+> > > from django.db.models import Max `<br />`
 > > > Album.objects.aggregate(Max('release_datetime'))`<br />`
 > > > {'release_datetime\_\_max': datetime.datetime(2014, 11, 20, 20, 8, 7, 127325, tzinfo=datetime.timezone.utc)}`<br />`
 
 # get all albums released before today:`<br />`
 
-> > > from django.utils import timezone`<br />`
+> > > from django.utils import timezone `<br />`
 > > > Album.objects.filter(release_datetime\_\_lt= timezone.now())`<br />`
 > > > <QuerySet [<Album: 2 album2>, <Album: 5 album1>, <Album: 6 album3>, <Album: 7 album4>]>`<br />`
 
@@ -147,4 +128,25 @@ note : album id isnt equal to number in name because I deleted some albums
 > > > Album.objects.all().order_by('cost','name')`<br />`
 > > > <QuerySet [<Album: 7 album4>, <Album: 6 album3>, <Album: 5 album1>, <Album: 2 album2>]>`<br />`
 
-<br />
+<br /><br /><br />
+
+# Task 2 query : order the list of artists by the number of their approved albums:
+
+> > > from artists.models import Artist
+> > > from albums.models import Albums
+> > > from django.db.models import Count
+> > > Artist.objects.all().annotate(num_albums = Count('album')).order_by('num_albums')
+
+<QuerySet [ <br /> <Artist: name: artist3
+social_url: https://www.instagram.com/artist3/
+0 approved albums>, <br /><Artist: name: artist4
+social_url: https://www.instagram.com/artist4/
+0 approved albums>,<br /> <Artist: name: artist5
+social_url: https://www.instagram.com/artist5/
+0 approved albums>, <br /><Artist: name: artist0
+social_url: https://www.instagram.com/artist0/
+1 approved albums>,<br /> <Artist: name: artist1
+social_url: https://www.instagram.com/artist1/
+1 approved albums>, <br /><Artist: name: artist2
+social_url: https://www.instagram.com/artist2/
+2 approved albums>]>
