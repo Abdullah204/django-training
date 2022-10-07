@@ -12,7 +12,7 @@ class AlbumInline(admin.StackedInline):
             'fields': ('name' , 'creation_datetime' , 'release_datetime' , 'cost' ,'artist'),
             
         }),(None,{
-            'fields' : ('approved',),
+            'fields' : ('is_approved',),
 'description': "Approve the album if its name is not explicit"
         })
     )
@@ -27,7 +27,7 @@ class AlbumAdmin(admin.ModelAdmin):
             'fields': ('name' , 'creation_datetime' , 'release_datetime' , 'cost' ,'artist'),
             
         }),(None,{
-            'fields' : ('approved',),
+            'fields' : ('is_approved',),
 'description': "Approve the album if its name is not explicit"
         })
     )

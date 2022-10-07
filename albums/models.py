@@ -10,7 +10,7 @@ class Album(models.Model):
     release_datetime = models.DateTimeField(blank = False)
     cost = models.DecimalField(blank = False, decimal_places = 2,max_digits = 15)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
     def __str__(self):
         return (f"{self.id} {self.name}")
 
