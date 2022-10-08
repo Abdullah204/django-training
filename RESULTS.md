@@ -137,21 +137,19 @@ note : album id isnt equal to number in name because I deleted some albums
 # Task 2 query : order the list of artists by the number of their approved albums:
 
 > > > from artists.models import Artist
-> > > from albums.models import Album
-> > > from django.db.models import Count, Case , When
-
-> > > `Artist.objects.annotate(num_albums = Count(Case(When(album__approved__exact = True,then = 1)))).order_by('num_albums',)`
-
-<QuerySet [ `<br />` <Artist: name: artist3
-social_url: https://www.instagram.com/artist3/
-0 approved albums>, `<br />`<Artist: name: artist4
-social_url: https://www.instagram.com/artist4/
-0 approved albums>,`<br />` <Artist: name: artist5
-social_url: https://www.instagram.com/artist5/
-0 approved albums>, `<br />`<Artist: name: artist0
-social_url: https://www.instagram.com/artist0/
-1 approved albums>,`<br />` <Artist: name: artist1
-social_url: https://www.instagram.com/artist1/
-1 approved albums>, `<br />`<Artist: name: artist2
-social_url: https://www.instagram.com/artist2/
-2 approved albums>]>
+> > > all = Artist.objects.all()
+> > > ordered = sorted(all,key = lambda t : t.approved_albums())
+> > > ordered
+> > > [<Artist: name: artist2
+> > > social_url: https://www.instagram.com/artist2/
+> > > 0 approved albums>, <Artist: name: artist3
+> > > social_url: https://www.instagram.com/artist3/
+> > > 0 approved albums>, <Artist: name: artist4
+> > > social_url: https://www.instagram.com/artist4/
+> > > 0 approved albums>, <Artist: name: artist5
+> > > social_url: https://www.instagram.com/artist5/
+> > > 0 approved albums>, <Artist: name: artist0
+> > > social_url: https://www.instagram.com/artist0/
+> > > 1 approved albums>, <Artist: name: artist1
+> > > social_url: https://www.instagram.com/artist1/
+> > > 3 approved albums>]

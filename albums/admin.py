@@ -18,8 +18,7 @@ class AlbumInline(admin.StackedInline):
     )
     readonly_fields=('creation_datetime',)
 
-class ArtistAdmin(admin.ModelAdmin):
-    inlines = [AlbumInline]
+
 
 class AlbumAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -34,5 +33,4 @@ class AlbumAdmin(admin.ModelAdmin):
     readonly_fields=('creation_datetime',)
 
 
-admin.site.register(Artist,ArtistAdmin)
 admin.site.register(Album,AlbumAdmin)
