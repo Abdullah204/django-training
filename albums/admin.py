@@ -9,28 +9,28 @@ class AlbumInline(admin.StackedInline):
     extra = 1
     fieldsets = (
         (None, {
-            'fields': ('name' , 'creation_datetime' , 'release_datetime' , 'cost' ,'artist'),
+            'fields': ('name' , 'created' , 'release_datetime' , 'cost' ,'artist'),
             
         }),(None,{
             'fields' : ('is_approved',),
 'description': "Approve the album if its name is not explicit"
         })
     )
-    readonly_fields=('creation_datetime',)
+    readonly_fields=('created',)
 
 
 
 class AlbumAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('name' , 'creation_datetime' , 'release_datetime' , 'cost' ,'artist'),
+            'fields': ('name' , 'created' , 'release_datetime' , 'cost' ,'artist'),
             
         }),(None,{
             'fields' : ('is_approved',),
 'description': "Approve the album if its name is not explicit"
         })
     )
-    readonly_fields=('creation_datetime',)
+    readonly_fields=('created',)
 
 
 admin.site.register(Album,AlbumAdmin)

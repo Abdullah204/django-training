@@ -9,6 +9,6 @@ class Artist(models.Model):
         ordering = ('stage_name',)
     def __str__(self):
         approved_albums = self.album_set.filter(is_approved__exact =True).count()
-        return (f"name: {self.stage_name} \nsocial_url: {self.social_link_field}\n  {approved_albums} approved albums")
+        return (f"name: {self.stage_name} \n social_url: {self.social_link_field} \n  {approved_albums} approved albums")
     def approved_albums(self):
         return self.album_set.filter(is_approved=True).count()
