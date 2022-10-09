@@ -134,7 +134,36 @@ note : album id isnt equal to number in name because I deleted some albums
 
 ` <br /><br />``<br /> `
 
-# Task 2 query : order the list of artists by the number of their approved albums:
+# Task 2 query : order the list of artists by the number of their approved albums:   
+
+first way :   
+
+> > > from django.db.models import Q   ,Count  
+> > > from artists.models import Artist  
+> > > Artist.objects.prefetch_related('album_set').annotate(num_approved_albums = Count('album',filter = Q(album__is_approved__exact = True))).order_by('num_approved_albums')  
+
+<QuerySet [<Artist: name: artist2 
+ social_url: https://www.instagram.com/artist2/ 
+  0 approved albums>, <Artist: name: artist3 
+ social_url: https://www.instagram.com/artist3/ 
+  0 approved albums>, <Artist: name: artist4 
+ social_url: https://www.instagram.com/artist4/ 
+  0 approved albums>, <Artist: name: artist5 
+ social_url: https://www.instagram.com/artist5/ 
+  0 approved albums>, <Artist: name: gggg 
+ social_url: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local 
+  0 approved albums>, <Artist: name: new 
+ social_url: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local 
+  0 approved albums>, <Artist: name: artist0 
+ social_url: https://www.instagram.com/artist0/ 
+  1 approved albums>, <Artist: name: artist1 
+ social_url: https://www.instagram.com/artist1/ 
+  3 approved albums>, <Artist: name: Artist1 
+ social_url: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local 
+  6 approved albums>]>
+
+
+second way :   
 
 > > > from artists.models import Artist
 > > > all = Artist.objects.all()
