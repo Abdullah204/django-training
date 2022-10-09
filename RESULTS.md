@@ -134,7 +134,15 @@ note : album id isnt equal to number in name because I deleted some albums
 
 ` <br /><br />``<br /> `
 
-# Task 2 query : order the list of artists by the number of their approved albums:
+# Task 2 query : order the list of artists by the number of their approved albums:   
+
+first way :   
+
+> > > from django.db.models import Q   ,Count  
+> > > from artists.models import Artist  
+> > > Artist.objects.prefetch_related('album_set').annotate(num_approved_albums = Count('album',filter = Q(album__is_approved__exact = True))).order_by('num_approved_albums')  
+
+
 
 > > > from artists.models import Artist
 > > > all = Artist.objects.all()
