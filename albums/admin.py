@@ -5,10 +5,12 @@ from .models import Artist , Album ,Song
 
 
 
-
-
-
+class SongInline(admin.StackedInline):
+    model = Song
+    extra = 0
+    min_num = 1
 class AlbumAdmin(admin.ModelAdmin):
+    inlines = [SongInline]
     fieldsets = (
         (None, {
             'fields': ('name' , 'created' , 'release_datetime' , 'cost' ,'artist'),
@@ -19,6 +21,9 @@ class AlbumAdmin(admin.ModelAdmin):
         })
     )
     readonly_fields=('created',)
+
+   
+
 
 
 admin.site.register(Album,AlbumAdmin)

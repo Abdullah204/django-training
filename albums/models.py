@@ -27,8 +27,9 @@ class Album(TimeStampedModel):
 
 
 class Song(models.Model):
+    
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
-    name = models.CharField(blank = True , default=album.name , max_length = 80)
+    name = models.CharField(blank = True , max_length = 80 , help_text = "if left empty , will take the name of the album" )
     image =  models.ImageField(blank = False)
     thumbnail = ImageSpecField(format='JPEG')
     # in my opinion , this field will be useful when you want to display 
@@ -36,5 +37,10 @@ class Song(models.Model):
     #  has more data , and you don't need the large size , so instead you fetch thumbnails
     # otherwise it will be useless
     audio = models.FileField(blank = False, validators=[validate_file_extension])
-    
+    def clean(self):
+        if self.name == "":
+            self.name = self.album.name
 
+    def delete(self, *args, **kwargs):
+        if(self.album.song_set.all().count() >1):
+            super(Song, self).delete(*args, **kwargs)
