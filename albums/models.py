@@ -8,6 +8,7 @@ from model_utils.models import TimeStampedModel
 from imagekit.models import ImageSpecField
 import os
 from django.core.exceptions import ValidationError
+from django import forms
 
 
 def validate_file_extension(value):
@@ -44,3 +45,5 @@ class Song(models.Model):
     def delete(self, *args, **kwargs):
         if(self.album.song_set.all().count() >1):
             super(Song, self).delete(*args, **kwargs)
+        else:
+            raise forms.ValidationError("album has only 1 song , can't be deleted")
