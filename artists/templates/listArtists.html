@@ -1,0 +1,11 @@
+<h1>List of Artists</h1>
+
+{% for artist in artist_list %}
+<h2>{{ artist }}</h2>
+<h3>Related Albums:</h3>
+<ul>
+  {% for album in artist.album_set.all %}
+  <li>{{ album }}</li>
+  {% endfor %}
+</ul>
+{% endfor %}

@@ -14,8 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+from django.contrib.auth import views as auth_views
+from musicplatform import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
+    path('albums/', include('albums.urls')),
+    path('artists/', include('artists.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/profile/',views.index, name='index'),
+    path('accounts/', include('django.contrib.auth.urls')),
+   
 ]
+urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
