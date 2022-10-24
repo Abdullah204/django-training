@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_extensions',
+    'authentication.apps.AuthenticationConfig',
+    'users.apps.UsersConfig',
     'albums.apps.AlbumsConfig',
     'rest_framework',
     'artists.apps.ArtistsConfig',
@@ -83,7 +86,24 @@ DATABASES = {
     }
 }
 
-
+DEFAULT_SQLITE_ENGINES = (
+    'django.db.backends.sqlite3',
+    'django.db.backends.spatialite',
+)
+DEFAULT_MYSQL_ENGINES = (
+    'django.db.backends.mysql',
+    'django.contrib.gis.db.backends.mysql',
+    'mysql.connector.django',
+)
+DEFAULT_POSTGRESQL_ENGINES = (
+    'django.db.backends.postgresql',
+    'django.db.backends.postgresql_psycopg2',
+    'django.db.backends.postgis',
+    'django.contrib.gis.db.backends.postgis',
+    'psqlextra.backend',
+    'django_zero_downtime_migrations.backends.postgres',
+    'django_zero_downtime_migrations.backends.postgis',
+)
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -141,5 +161,26 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    
 }
+
+AUTH_USER_MODEL = 'users.User'
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]

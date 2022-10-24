@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.urls import path, include
-from django.contrib.auth.models import User
+from users.models import User
 from rest_framework import routers, serializers, viewsets
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,7 +34,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-# Routers provide an easy way of automatically determining the URL conf.
+#Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 
@@ -45,7 +45,9 @@ urlpatterns = [
     path('accounts/profile/',views.index, name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('authentication/', include('authentication.urls')),
+
 
 ]
 urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
