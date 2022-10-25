@@ -1,6 +1,7 @@
 from rest_framework import serializers, viewsets
 from users.models import  User
-from django.contrib.auth import password_validation
+from django.contrib.auth import password_validation,authenticate, login
+
 class UserRegistrationSerializer(serializers.Serializer):
     username = serializers.CharField()
     email = serializers.EmailField()
