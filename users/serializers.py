@@ -17,3 +17,9 @@ class UserSerializer(serializers.ModelSerializer):
         password_validation.NumericPasswordValidator().validate(data.get('password'))
         password_validation.UserAttributeSimilarityValidator().validate(data.get('password'))
         return super().validate(data)
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.bio = validated_data.get('bio', instance.bio)
+        instance.save()
+        return instance

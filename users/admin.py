@@ -1,5 +1,4 @@
 from django.contrib import admin
-from users.forms import UserRegisterForm
 from .models import User
 from django.contrib.auth.admin import UserAdmin
 from django.db import models

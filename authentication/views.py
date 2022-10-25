@@ -1,25 +1,14 @@
-from users.models import User
 from .serializers import UserRegistrationSerializer
 from users.serializers import UserSerializer
-from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
-from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework import permissions
-from django.http import HttpResponse
-from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
-from django import forms
-from rest_framework.generics import CreateAPIView
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from django.contrib.auth import password_validation,authenticate, login,logout
-
+from django.contrib.auth import  login
 from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
-from knox.views import LogoutView as KnoxLogoutView
 
 class AdminOrGuest(permissions.BasePermission):
      def has_permission(self, request, view):        
