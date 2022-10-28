@@ -45,6 +45,5 @@ def test_unAuthenticatedRegisterViewWithValidData():
     "confirm_password" : "adwmfqwpfqmpfqwf"
     }
     response = client.post('http://localhost:8000/authentication/register/',register_data)
-    print(response.content)
     assert response.status_code == 200
 
