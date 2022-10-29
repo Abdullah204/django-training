@@ -9,7 +9,7 @@ from users.models import User
 from django.contrib.auth import get_user_model
 from rest_framework.exceptions import ErrorDetail
 from rest_framework.response import Response
-
+from rest_framework.authtoken.models import Token
 
 @pytest.mark.django_db
 def test_authenticatedRegisterView(auth_client):
@@ -186,3 +186,34 @@ def test_authenticatedLoginData(auth_client):
     client.post('http://localhost:8000/authentication/register/',register_data) 
     response = client.post('http://localhost:8000/authentication/login/',login_data) 
     assert response.data ["username"] == "MegaCoredadp" and response.data ["bio"] == '' and response.data ["email"] == "activedade@gmail.com"  and response.data ["token"] 
+
+
+
+@pytest.mark.django_db
+def test_unauthenticatedLogout():
+    client = APIClient()
+    response = client.post('http://localhost:8000/authentication/logout/') 
+    assert response.status_code == 401
+
+
+@pytest.mark.django_db
+def test_authenticatedLogout():
+
+    client = APIClient()
+    register_data = {
+    "username" : "useruser",
+    "email" : "useruser@gmail.com",
+    "password" : "adwmfqwpfqmpfqwf",
+    "confirm_password" : "adwmfqwpfqmpfqwf"
+    }
+    login_data = {
+    "username" : "useruser",
+    "password" : "adwmfqwpfqmpfqwf",
+    }
+    client.post('http://localhost:8000/authentication/register/',register_data)
+    login_response = client.post('http://localhost:8000/authentication/login/',login_data) 
+    token = login_response.data["token"]
+    print(token)
+    client.credentials(HTTP_AUTHORIZATION='Token ' + token)
+    response = client.post('http://localhost:8000/authentication/logout/') 
+    assert response.status_code == 204
