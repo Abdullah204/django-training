@@ -1,4 +1,3 @@
-# from users.tests.conftest import auth_client
 import email
 from rest_framework.test import APIRequestFactory
 from rest_framework.test import RequestsClient
