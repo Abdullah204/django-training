@@ -1,3 +1,4 @@
+from tkinter import Variable
 from rest_framework import serializers
 from .models import User
 from django.contrib.auth import get_user_model
@@ -11,12 +12,20 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
-    def validate(self, data):
-        password_validation.MinimumLengthValidator().validate(data.get('password'))
-        password_validation.CommonPasswordValidator().validate(data.get('password'))
-        password_validation.NumericPasswordValidator().validate(data.get('password'))
-        password_validation.UserAttributeSimilarityValidator().validate(data.get('password'))
-        return super().validate(data)
+    # def validate(self, data):
+    #     password_validation.MinimumLengthValidator().validate(data.get('password'))
+    #     password_validation.CommonPasswordValidator().validate(data.get('password'))
+    #     password_validation.NumericPasswordValidator().validate(data.get('password'))
+    #     password_validation.UserAttributeSimilarityValidator().validate(data.get('password'))
+    #     return super().validate(data)
+
+    def validate_password(self, value):
+        if not value is None:
+            password_validation.MinimumLengthValidator().validate(value)
+            password_validation.CommonPasswordValidator().validate(value)
+            password_validation.NumericPasswordValidator().validate(value)
+            password_validation.UserAttributeSimilarityValidator().validate(value)
+        return value
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username', instance.username)
         instance.email = validated_data.get('email', instance.email)

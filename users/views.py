@@ -43,7 +43,8 @@ class UserDetailView(APIView):
 
 
 
-    def patch(self, request, pk):
+    def patch(self, request,pk):
+        
         if not request.user.pk == pk:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         try:
@@ -54,6 +55,7 @@ class UserDetailView(APIView):
         model_serializer = UserSerializer(user,data=request.data,partial=True)
         model_serializer.is_valid(raise_exception=True)
         model_serializer.save()
+        
         return Response({
             "id" : user.id,
             'username': user.username,

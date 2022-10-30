@@ -213,7 +213,6 @@ def test_authenticatedLogout():
     client.post('http://localhost:8000/authentication/register/',register_data)
     login_response = client.post('http://localhost:8000/authentication/login/',login_data) 
     token = login_response.data["token"]
-    print(token)
     client.credentials(HTTP_AUTHORIZATION='Token ' + token)
     response = client.post('http://localhost:8000/authentication/logout/') 
     assert response.status_code == 204
