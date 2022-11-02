@@ -9,19 +9,16 @@ from django.contrib.auth import get_user_model
 from rest_framework.exceptions import ErrorDetail
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-
+from artists.models import Artist
 @pytest.mark.django_db
-def test_ArtistListGet(auth_client):
-    
-    client = auth_client()
+def test_ArtistListGet(client):
+    Artist.objects.create(stage_name = 'artist1' , social_link_field = 'http://www.artist1.com')
     response = client.get('http://localhost:8000/artists/')
-    assert response.data  == []
+    assert response.data  == [dict([('id', 1), ('stage_name', 'artist1'), ('social_link_field', 'http://www.artist1.com')])]
 
 
 @pytest.mark.django_db
-def test_ArtistListPut(auth_client):
-    
-    client = auth_client()
+def test_ArtistListPut(client):
     post_data = {
         "stage_name" : "abc123",
         "social_link_field" : "http://www.artist.com"
@@ -30,9 +27,7 @@ def test_ArtistListPut(auth_client):
     assert response.data == {'id': 1, 'stage_name': 'abc123', 'social_link_field': 'http://www.artist.com'}
 
 @pytest.mark.django_db
-def test_ArtistListPutInvalidData(auth_client):
-    
-    client = auth_client()
+def test_ArtistListPutInvalidData(client):
     post_data = {
         "stage_name" : "abc123",
         "social_link_field" : "accacsac"
@@ -42,9 +37,7 @@ def test_ArtistListPutInvalidData(auth_client):
 
 
 @pytest.mark.django_db
-def test_ArtistListPutMissingData(auth_client):
-    
-    client = auth_client()
+def test_ArtistListPutMissingData(client):
     post_data = {
         "social_link_field" : "accacsac"
     }
@@ -53,9 +46,7 @@ def test_ArtistListPutMissingData(auth_client):
 
 
 @pytest.mark.django_db
-def test_ArtistListPutDuplicateStageName(auth_client):
-    
-    client = auth_client()
+def test_ArtistListPutDuplicateStageName(client):
     post_data = {
         "stage_name" : "abc123",
         "social_link_field" : "http://www.artist.com"

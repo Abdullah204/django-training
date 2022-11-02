@@ -5,8 +5,7 @@ from django.contrib.auth import get_user_model
 from users.views import UserDetailView
 import pytest
 @pytest.mark.django_db
-def test_UserDetailViewGET():
-    client = APIClient()
+def test_UserDetailViewGET(client):
     register_data = {
     "username" : "useruser",
     "email" : "useruser@gmail.com",
@@ -18,15 +17,13 @@ def test_UserDetailViewGET():
     assert response.data == {'bio': '', 'email': 'useruser@gmail.com', 'id': 1, 'username': 'useruser'}
 
 
-def test_UserDetailViewGETNotFound():
-    client = APIClient()
+def test_UserDetailViewGETNotFound(client):
     response = client.get('http://localhost:8000/users/1/') 
     assert response.status_code == 404
 
 @pytest.mark.django_db
-def test_UserDetailViewPUT():
+def test_UserDetailViewPUT(client):
 
-    client = APIClient()
 
     register_data = {
     "username" : "useruser",
@@ -50,19 +47,7 @@ def test_UserDetailViewPUT():
     assert response.data == {'bio': 'newBIO', 'email': 'javed2@javed.com', 'id': 1, 'username': 'javed2'}
 
 @pytest.mark.django_db
-def test_UserDetailViewPUTUsernameMissing():
-
-    client = APIClient()
-
-    register_data = {
-    "username" : "useruser",
-    "email" : "useruser@gmail.com",
-    "password" : "adwmfqwpfqmpfqwf",
-    "confirm_password" : "adwmfqwpfqmpfqwf"
-    }
-    client.post('http://localhost:8000/authentication/register/' , register_data)
-    user = get_user_model().objects.get(pk =1)
-
+def test_UserDetailViewPUTUsernameMissing(client , user):
     put_data = {
         "bio" : "newBIO",
         "email" : "javed2@javed.com",
@@ -70,25 +55,11 @@ def test_UserDetailViewPUTUsernameMissing():
     }
     client.force_authenticate(user = user)
     response= client.put('http://localhost:8000/users/1/',put_data)
-    
-    
     assert response.status_code == 400
 
 
 @pytest.mark.django_db
-def test_UserDetailViewPUTPasswordMissing():
-
-    client = APIClient()
-
-    register_data = {
-    "username" : "useruser",
-    "email" : "useruser@gmail.com",
-    "password" : "adwmfqwpfqmpfqwf",
-    "confirm_password" : "adwmfqwpfqmpfqwf"
-    }
-    client.post('http://localhost:8000/authentication/register/' , register_data)
-    user = get_user_model().objects.get(pk =1)
-
+def test_UserDetailViewPUTPasswordMissing(client,user):
     put_data = {
         "bio" : "newBIO",
         "email" : "javed2@javed.com",
@@ -96,26 +67,12 @@ def test_UserDetailViewPUTPasswordMissing():
     }
     client.force_authenticate(user = user)
     response= client.put('http://localhost:8000/users/1/',put_data)
-    
-    
     assert response.status_code == 400
 
 
 
 @pytest.mark.django_db
-def test_UserDetailViewPUTDifferentID():
-
-    client = APIClient()
-
-    register_data = {
-    "username" : "useruser",
-    "email" : "useruser@gmail.com",
-    "password" : "adwmfqwpfqmpfqwf",
-    "confirm_password" : "adwmfqwpfqmpfqwf"
-    }
-    client.post('http://localhost:8000/authentication/register/' , register_data)
-    user = get_user_model().objects.get(pk =1)
-
+def test_UserDetailViewPUTDifferentID(client ,user):
     put_data = {
         "bio" : "newBIO",
         "username" : "javed2",
@@ -128,19 +85,7 @@ def test_UserDetailViewPUTDifferentID():
 
 
 @pytest.mark.django_db
-def test_UserDetailViewPUTUnavailableID():
-
-    client = APIClient()
-
-    register_data = {
-    "username" : "useruser",
-    "email" : "useruser@gmail.com",
-    "password" : "adwmfqwpfqmpfqwf",
-    "confirm_password" : "adwmfqwpfqmpfqwf"
-    }
-    client.post('http://localhost:8000/authentication/register/' , register_data)
-    user = get_user_model().objects.get(pk =1)
-
+def test_UserDetailViewPUTUnavailableID(client , user):
     put_data = {
         "bio" : "newBIO",
         "email" : "javed2@javed.com",
@@ -153,19 +98,7 @@ def test_UserDetailViewPUTUnavailableID():
 
 
 @pytest.mark.django_db
-def test_UserDetailViewPATCHUnavailableID():
-
-    client = APIClient()
-
-    register_data = {
-    "username" : "useruser",
-    "email" : "useruser@gmail.com",
-    "password" : "adwmfqwpfqmpfqwf",
-    "confirm_password" : "adwmfqwpfqmpfqwf"
-    }
-    client.post('http://localhost:8000/authentication/register/' , register_data)
-    user = get_user_model().objects.get(pk =1)
-
+def test_UserDetailViewPATCHUnavailableID(client , user):
     put_data = {
         "bio" : "newBIO",
         "email" : "javed2@javed.com",
@@ -178,19 +111,7 @@ def test_UserDetailViewPATCHUnavailableID():
 
 
 @pytest.mark.django_db
-def test_UserDetailViewPATCHDifferentID():
-
-    client = APIClient()
-
-    register_data = {
-    "username" : "useruser",
-    "email" : "useruser@gmail.com",
-    "password" : "adwmfqwpfqmpfqwf",
-    "confirm_password" : "adwmfqwpfqmpfqwf"
-    }
-    client.post('http://localhost:8000/authentication/register/' , register_data)
-    user = get_user_model().objects.get(pk =1)
-
+def test_UserDetailViewPATCHDifferentID(client , user):
     put_data = {
         "bio" : "newBIO",
         "username" : "javed2",
@@ -204,39 +125,18 @@ def test_UserDetailViewPATCHDifferentID():
 
 
 @pytest.mark.django_db
-def test_UserDetailViewPATCHPartialData():
-    client = APIClient()
-    register_data = {
-    "username" : "useruser",
-    "email" : "useruser@gmail.com",
-    "password" : "adwmfqwpfqmpfqwf",
-    "confirm_password" : "adwmfqwpfqmpfqwf"
-    }
-    client.post('http://localhost:8000/authentication/register/' , register_data)
-    user = get_user_model().objects.get(pk =1)
+def test_UserDetailViewPATCHPartialData(client,user):
     put_data = {
         "bio" : "newBIO",
         "username" : "javed2",
     }
     client.force_authenticate(user = user)
     response= client.patch('http://localhost:8000/users/1/',put_data)
-    assert response.data == {'bio': 'newBIO', 'email': 'useruser@gmail.com', 'id': 1, 'username': 'javed2'}
+    assert response.data == {'bio': 'newBIO', 'email': 'ahmed@gmail.com', 'id': 1, 'username': 'javed2'}
 
 
 @pytest.mark.django_db
-def test_UserDetailViewPATCHFullData():
-
-    client = APIClient()
-
-    register_data = {
-    "username" : "useruser",
-    "email" : "useruser@gmail.com",
-    "password" : "adwmfqwpfqmpfqwf",
-    "confirm_password" : "adwmfqwpfqmpfqwf"
-    }
-    client.post('http://localhost:8000/authentication/register/' , register_data)
-    user = get_user_model().objects.get(pk =1)
-
+def test_UserDetailViewPATCHFullData(client,user):
     put_data = {
         "bio" : "newBIO",
         "username" : "javed2",
@@ -245,6 +145,4 @@ def test_UserDetailViewPATCHFullData():
     }
     client.force_authenticate(user = user)
     response= client.patch('http://localhost:8000/users/1/',put_data)
-    
-    
     assert response.data == {'bio': 'newBIO', 'email': 'javed2@javed.com', 'id': 1, 'username': 'javed2'}
