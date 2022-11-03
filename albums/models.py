@@ -26,7 +26,6 @@ class Album(TimeStampedModel):
     def __str__(self):
         return (f"id: {self.id} \n name: {self.name} cost: {self.cost} \n approved : {self.is_approved}")
 
-
 class Song(models.Model):
     
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
