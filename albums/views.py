@@ -11,7 +11,9 @@ from.forms import AlbumForm
 from django.views import View
 from rest_framework.views import APIView
 from albums.models import Album
-from albums.serializers import AlbumSerializer
+from django import forms
+from albums.serializers import AlbumSerializer , AlbumRequestSerializer
+import sys
 class CreateView(View):
     template_name = 'createAlbum.html'
 
@@ -38,7 +40,7 @@ class AlbumList(APIView):
     List all APPROVED albums, or create a new album.
     """
     pagination_class = LimitOffsetPagination
-    permission_classes = IsAuthenticatedOrReadOnly
+    permission_classes = [IsAuthenticatedOrReadOnly]
     filterset_class = AlbumFilter
     filter_backends = (filters.DjangoFilterBackend,)
 
@@ -49,19 +51,52 @@ class AlbumList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        id = request.user.id
         try :
-            artist = Artist.objects.get(id=id)
+            artist = Artist.objects.get(user = request.user)
         except :
-            return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
-        serializer = AlbumSerializer(data=request.data)
+        serializer = AlbumRequestSerializer(data=request.data ,context={'artist': artist})
         if serializer.is_valid():
-
-            model_obj = serializer.save()
-            model_obj.artist = artist
-            model_obj.save()
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class AlbumListManual(APIView):
+    pagination_class = LimitOffsetPagination
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    def get(self, request, format=None):
+        lte = request.query_params.get('lte')
+        gte = request.query_params.get('gte')
+        name = request.query_params.get('name')
+        try:
+            if(not lte is None):
+                lte = int(lte)
+        except:
+            raise forms.ValidationError("incorrect data type for lte")
+        try:
+            if(not gte is None):
+                gte = int(gte)
+        except:
+            raise forms.ValidationError("incorrect data type for gte")
+        
+        if(not gte is None and not lte is None and not name is None):
+            albums = Album.objects.filter(cost__lte = lte , cost__gte = gte ,name__iexact= name).all()
+        elif(not gte is None and not lte in None):
+            albums = Album.objects.filter(cost__lte = lte , cost__gte = gte).all()
+        elif(not gte is None and not name in None):
+            albums = Album.objects.filter(name__iexact= name , cost__gte = gte).all()
+        elif(not lte is None and not name in None):
+            albums = Album.objects.filter( name__iexact= name , cost__lte = lte).all()
+        elif(not lte is None):
+            albums = Album.objects.filter( cost__lte = lte).all()
+        elif(not gte is None):
+            albums = Album.objects.filter(cost__gte = gte).all()
+        elif(not name is None):
+            albums = Album.objects.filter(name__iexact= name ).all()
+        else:
+            albums = Album.objects.all()
+        albums = albums.filter(is_approved = True)
+        serializer = AlbumSerializer(albums, many=True)
+        return Response(serializer.data)

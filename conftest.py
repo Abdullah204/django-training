@@ -1,6 +1,8 @@
 import pytest
 from rest_framework.test import APIClient
 from users.models import User
+from artists.models import Artist
+from albums.models import Album
 from authentication.serializers import UserRegistrationSerializer
 
 @pytest.fixture
@@ -50,3 +52,16 @@ def get_client(user):
             return client, random_user.id
     
     return api_client
+
+
+
+@pytest.fixture
+def artist(user):
+    artist = Artist.objects.create(stage_name = 'artist1',social_link_field =  'http://www.artist1.com', user = user)
+    return artist
+
+@pytest.fixture
+def album(artist):
+    album = Album.objects.create(name = "album1" , cost = 11.2 , release_datetime = "2001-12-04" , artist = artist ,is_approved  = True)
+    return album
+

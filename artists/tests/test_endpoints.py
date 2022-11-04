@@ -14,7 +14,7 @@ from artists.models import Artist
 def test_ArtistListGet(client):
     Artist.objects.create(stage_name = 'artist1' , social_link_field = 'http://www.artist1.com')
     response = client.get('http://localhost:8000/artists/')
-    assert response.data  == [dict([('id', 1), ('stage_name', 'artist1'), ('social_link_field', 'http://www.artist1.com')])]
+    assert response.data  == [dict([ ('stage_name', 'artist1'), ('social_link_field', 'http://www.artist1.com')])]
 
 
 @pytest.mark.django_db
@@ -24,7 +24,7 @@ def test_ArtistListPut(client):
         "social_link_field" : "http://www.artist.com"
     }
     response = client.post('http://localhost:8000/artists/',post_data)
-    assert response.data == {'id': 1, 'stage_name': 'abc123', 'social_link_field': 'http://www.artist.com'}
+    assert response.data == {'stage_name': 'abc123', 'social_link_field': 'http://www.artist.com'}
 
 @pytest.mark.django_db
 def test_ArtistListPutInvalidData(client):
