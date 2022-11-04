@@ -25,9 +25,7 @@ class Album(TimeStampedModel):
     is_approved = models.BooleanField(default=False)
     def __str__(self):
         return (f"id: {self.id} \n name: {self.name} cost: {self.cost} \n approved : {self.is_approved}")
-
 class Song(models.Model):
-    
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     name = models.CharField(blank = True , max_length = 80 , help_text = "if left empty , will take the name of the album" )
     image =  models.ImageField(blank = False)

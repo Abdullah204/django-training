@@ -5,10 +5,11 @@ from rest_framework.pagination import LimitOffsetPagination
 from artists.models import Artist
 from django_filters import rest_framework as filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from .filters import AlbumFilter
+from albums.filters import AlbumFilter
 from django.http import HttpResponse
 from.forms import AlbumForm
 from django.views import View
+from rest_framework import generics
 from rest_framework.views import APIView
 from albums.models import Album
 from django import forms
@@ -35,20 +36,21 @@ class CreateView(View):
 
   
 
-class AlbumList(APIView):
+class AlbumList(generics.ListAPIView):
     """
     List all APPROVED albums, or create a new album.
     """
+    queryset = Album.objects.all()
+    serializer_class =AlbumSerializer
     pagination_class = LimitOffsetPagination
     permission_classes = [IsAuthenticatedOrReadOnly]
     filterset_class = AlbumFilter
     filter_backends = (filters.DjangoFilterBackend,)
 
-
-    def get(self, request, format=None):
-        albums = Album.objects.filter(is_approved=True).all()
-        serializer = AlbumSerializer(albums, many=True)
-        return Response(serializer.data)
+    # def get(self, request, format=None):
+    #     albums = Album.objects.filter(is_approved=True)
+    #     serializer = AlbumSerializer(albums, many=True)
+    #     return Response(serializer.data)
 
     def post(self, request, format=None):
         try :
@@ -61,6 +63,11 @@ class AlbumList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_queryset(self):
+        if self.request.method == 'GET':
+            return Album.objects.filter(is_approved=True)
+
 
 
 class AlbumListManual(APIView):
@@ -80,7 +87,7 @@ class AlbumListManual(APIView):
                 gte = int(gte)
         except:
             raise forms.ValidationError("incorrect data type for gte")
-        albums = albums.filter(is_approved = True)
+        albums = Album.objects.filter(is_approved = True)
         if(not gte is None):
             albums = albums.filter(cost__gte = gte).all()
         if( not lte is None):

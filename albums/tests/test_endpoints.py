@@ -31,10 +31,10 @@ def test_unauthenticated_create_album(user , client):
 @pytest.mark.django_db
 def test_get_albums_unauthenticated(client,album):
     response = client.get('http://localhost:8000/albums/')
-    assert response.data == [ OrderedDict([('name', 'album1'), ('release_datetime', '2001-12-04T00:00:00Z'), ('cost', '11.20'), ('artist', 1)])]
+    assert response.data == OrderedDict([('count', 1), ('next', None), ('previous', None), ('results', [OrderedDict([('name', 'album1'), ('release_datetime', '2001-12-04T00:00:00Z'), ('cost', '11.20'), ('artist', 1)])])])
 
 
 @pytest.mark.django_db
 def test_get_albums_authenticated(auth_client,album):
     response = auth_client.get('http://localhost:8000/albums/')
-    assert response.data == [ OrderedDict([('name', 'album1'), ('release_datetime', '2001-12-04T00:00:00Z'), ('cost', '11.20'), ('artist', 1)])]
+    assert response.data == OrderedDict([('count', 1), ('next', None), ('previous', None), ('results', [OrderedDict([('name', 'album1'), ('release_datetime', '2001-12-04T00:00:00Z'), ('cost', '11.20'), ('artist', 1)])])])
