@@ -4,7 +4,6 @@ from collections import OrderedDict
 def test_artist_create_album(artist,auth_client):
     album = dict(name = 'testalbum' , release_datetime = '2003-06-06' , cost = 11 )
     response = auth_client.post('http://localhost:8000/albums/',album)
-    print(response.data)
     assert response.status_code == 201 
     assert response.data == {'cost': '11.00',
          'name': 'testalbum',

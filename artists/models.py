@@ -8,7 +8,7 @@ class Artist(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        primary_key = True,null = True
+        primary_key = True
     )
     class Meta:
         ordering = ('stage_name',)

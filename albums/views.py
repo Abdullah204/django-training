@@ -80,23 +80,12 @@ class AlbumListManual(APIView):
                 gte = int(gte)
         except:
             raise forms.ValidationError("incorrect data type for gte")
-        
-        if(not gte is None and not lte is None and not name is None):
-            albums = Album.objects.filter(cost__lte = lte , cost__gte = gte ,name__iexact= name).all()
-        elif(not gte is None and not lte in None):
-            albums = Album.objects.filter(cost__lte = lte , cost__gte = gte).all()
-        elif(not gte is None and not name in None):
-            albums = Album.objects.filter(name__iexact= name , cost__gte = gte).all()
-        elif(not lte is None and not name in None):
-            albums = Album.objects.filter( name__iexact= name , cost__lte = lte).all()
-        elif(not lte is None):
-            albums = Album.objects.filter( cost__lte = lte).all()
-        elif(not gte is None):
-            albums = Album.objects.filter(cost__gte = gte).all()
-        elif(not name is None):
-            albums = Album.objects.filter(name__iexact= name ).all()
-        else:
-            albums = Album.objects.all()
         albums = albums.filter(is_approved = True)
+        if(not gte is None):
+            albums = albums.filter(cost__gte = gte).all()
+        if( not lte is None):
+            albums = albums.filter(cost__lte = lte).all()     
+        if(not name is None):
+            albums = albums.filter(name__iexact= name).all()
         serializer = AlbumSerializer(albums, many=True)
         return Response(serializer.data)
