@@ -11,17 +11,26 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+import environ
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# Set the project base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Take environment variables from .env file
+DEBUG = True
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ye@+oo+c76@hi^-70&=&d*3ay-x79ex#m0r5$1ey&2yos5io@@'
-
+SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -193,3 +202,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+EMAIL_HOST_USER=env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
+CELERY_CONF_BROKER_URL = env('CELERY_CONF_BROKER_URL')
+CELERY_CONF_RESULT_BACKEND = env('CELERY_CONF_RESULT_BACKEND')
+
+CELERY_CONF_BEAT_SCHEDULE = {
+    'add-every-30-seconds': {
+        'task': 'album_creation_check',
+        'schedule': 30.0,    },
+    }
+
+
+# CELERY_CONF_BEAT_SCHEDULE = {
+#     'add-every-24-hours': {
+#         'task': 'album_creation_check',
+#         'schedule': crontab(minute=0, hour='*/24')
+#     },
+#     }
