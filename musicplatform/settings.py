@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 import environ
 
+from celery.schedules import crontab
 
 env = environ.Env(
     # set casting, default value
@@ -216,16 +217,11 @@ DEFAULT_FROM_EMAIL = 'abdullahahmadfouad@gmail.com'
 
 
 
+
+
 CELERY_CONF_BEAT_SCHEDULE = {
-    'add-every-30-seconds': {
+    'add-every-24-hours': {
         'task': 'tasks.album_creation_check',
-        'schedule': 5.0,    },
-    }
-
-
-# CELERY_CONF_BEAT_SCHEDULE = {
-#     'add-every-24-hours': {
-#         'task': 'album_creation_check',
-#         'schedule': crontab(minute=0, hour='*/24')
-#     },
-#     }
+        'schedule': crontab(minute=0, hour='*/24')
+    },
+}
