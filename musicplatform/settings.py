@@ -201,16 +201,25 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 EMAIL_HOST_USER=env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
 CELERY_CONF_BROKER_URL = env('CELERY_CONF_BROKER_URL')
 CELERY_CONF_RESULT_BACKEND = env('CELERY_CONF_RESULT_BACKEND')
+DEFAULT_FROM_EMAIL = 'abdullahahmadfouad@gmail.com'
+
+
+
+
+
 
 CELERY_CONF_BEAT_SCHEDULE = {
     'add-every-30-seconds': {
-        'task': 'album_creation_check',
-        'schedule': 30.0,    },
+        'task': 'tasks.album_creation_check',
+        'schedule': 5.0,    },
     }
 
 

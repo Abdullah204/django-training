@@ -18,8 +18,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY_CONF')
 
 # Load task modules from all registered Django apps.
 app.autodiscover_tasks()
-
-# app.conf.beat_schedule = settings.CELERY_CONF_BEAT_SCHEDULE
+app.conf.beat_schedule = settings.CELERY_CONF_BEAT_SCHEDULE
 
 
     
