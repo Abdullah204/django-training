@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.pagination import LimitOffsetPagination
 from artists.models import Artist
+from permissions import IsArtistPermission
 from django_filters import rest_framework as filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from albums.filters import AlbumFilter
@@ -36,14 +37,14 @@ class CreateView(View):
 
   
 
-class AlbumList(generics.ListAPIView):
+class AlbumList(generics.ListCreateAPIView):
     """
     List all APPROVED albums, or create a new album.
     """
     queryset = Album.objects.all()
     serializer_class =AlbumSerializer
     pagination_class = LimitOffsetPagination
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly,IsArtistPermission]
     filterset_class = AlbumFilter
     filter_backends = (filters.DjangoFilterBackend,)
 
