@@ -9,7 +9,8 @@ from imagekit.models import ImageSpecField
 import os
 from django.core.exceptions import ValidationError
 from django import forms
-
+from albums.tasks import congratulate_artist
+from celery.schedules import crontab
 
 def validate_file_extension(value):
         ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
@@ -25,10 +26,10 @@ class Album(TimeStampedModel):
     is_approved = models.BooleanField(default=False)
     def __str__(self):
         return (f"id: {self.id} \n name: {self.name} cost: {self.cost} \n approved : {self.is_approved}")
-
-
+    def save(self, *args, **kwargs):
+        congratulate_artist.delay(self.artist.user.id, self.name, self.release_datetime, self.cost)
+        super(Album, self).save(*args, **kwargs)
 class Song(models.Model):
-    
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     name = models.CharField(blank = True , max_length = 80 , help_text = "if left empty , will take the name of the album" )
     image =  models.ImageField(blank = False)

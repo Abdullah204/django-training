@@ -3,7 +3,7 @@ from django.views import View
 
 # Create your views here.
 from artists.models import Artist
-from artists.serializers import ArtistSerializer
+from artists.serializers import ArtistSerializer ,ArtistRequestSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -46,7 +46,7 @@ class ArtistList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = ArtistSerializer(data=request.data)
+        serializer = ArtistSerializer(data=request.data )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
